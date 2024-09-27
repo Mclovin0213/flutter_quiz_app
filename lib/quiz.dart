@@ -40,6 +40,8 @@ class _QuizState extends State<Quiz> {
           currentQuestions = flutterQuestions;
         case QuestionCategory.basketball:
           currentQuestions = basketballQuestions;
+        case QuestionCategory.movies:
+          currentQuestions = movieQuestions;
       }
 
       activeScreen = 'question-screen';

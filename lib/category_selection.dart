@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:quiz_app/category_item.dart';
 import 'package:quiz_app/data/questions.dart';
 
 class CategorySelection extends StatefulWidget {
@@ -22,44 +24,37 @@ class _CategorySelectionState extends State<CategorySelection> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Select a category!",
-          style: GoogleFonts.lato(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                chooseCategory(QuestionCategory.flutter);
-              },
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/flutter.png'),
-                      fit: BoxFit.fill
-                    ),
-                    border: Border.all(color: Colors.white, width: 1)),
-              ),
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Select a category!",
+            style: GoogleFonts.lato(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CategoryItem(onCategorySelection: chooseCategory, category: QuestionCategory.flutter, imagePath: 'assets/flutter.png',),
+                CategoryItem(onCategorySelection: chooseCategory, category: QuestionCategory.basketball, imagePath: 'assets/basketball.png',),
+                CategoryItem(onCategorySelection: chooseCategory, category: QuestionCategory.movies, imagePath: 'assets/movie.png',),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

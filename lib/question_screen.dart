@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/answer_button.dart';
@@ -17,11 +19,46 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   var currentQuestionIndex = 0;
+  Timer? timer;
+  int seconds = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
 
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
+    });
+  }
+
+  void startTimer() {
+    timer?.cancel();
+    seconds = 10;
+
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (seconds > 0) {
+        setState(() {
+          seconds--;
+        });
+      } else {
+
+        nextQuestion();
+      }
+    });
+  }
+
+  void nextQuestion() {
+    setState(() {
+      if (currentQuestionIndex < 6) {
+        currentQuestionIndex++;
+        startTimer();
+      } else {
+        timer?.cancel();
+      }
     });
   }
 

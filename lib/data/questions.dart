@@ -2,7 +2,8 @@ import 'package:quiz_app/models/quiz_question.dart';
 
 enum QuestionCategory {
   flutter,
-  basketball
+  basketball,
+  movies
 }
 
 const flutterQuestions = [
@@ -112,4 +113,62 @@ const basketballQuestions = [
     ],
   ),
 ];
+
+const movieQuestions = [
+  QuizQuestion(
+    'Who directed the movie "Inception"?',
+    [
+      'Christopher Nolan',
+      'Steven Spielberg',
+      'James Cameron',
+      'Martin Scorsese',
+    ],
+  ),
+  QuizQuestion(
+    'Which movie won the Academy Award for Best Picture in 2020?',
+    [
+      'Parasite',
+      '1917',
+      'Joker',
+      'Once Upon a Time in Hollywood',
+    ],
+  ),
+  QuizQuestion(
+    'What is the highest-grossing movie of all time as of 2023?',
+    [
+      'Avatar: The Way of Water',
+      'Avengers: Endgame',
+      'Titanic',
+      'Star Wars: The Force Awakens',
+    ],
+  ),
+  QuizQuestion(
+    'Which film franchise features the characters Luke Skywalker, Darth Vader, and Princess Leia?',
+    [
+      'Star Wars',
+      'Star Trek',
+      'Lord of the Rings',
+      'The Matrix',
+    ],
+  ),
+  QuizQuestion(
+    'What is the fictional African country in "Black Panther"?',
+    [
+      'Wakanda',
+      'Zamunda',
+      'Genosha',
+      'Latveria',
+    ],
+  ),
+  QuizQuestion(
+    'Who played the role of "The Joker" in The Dark Knight?',
+    [
+      'Heath Ledger',
+      'Joaquin Phoenix',
+      'Jared Leto',
+      'Jack Nicholson',
+    ],
+  ),
+];
+
 
