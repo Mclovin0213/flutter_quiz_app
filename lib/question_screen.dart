@@ -5,10 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/models/quiz_question.dart';
+import 'package:quiz_app/question_timer.dart';
 import 'package:quiz_app/questions_summary.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key, required this.onSelectAnswer, required this.questions });
+  const QuestionScreen({
+    super.key,
+    required this.onSelectAnswer,
+    required this.questions,
+  });
 
   final void Function(String answer) onSelectAnswer;
   final List<QuizQuestion> questions;
@@ -19,47 +24,18 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   var currentQuestionIndex = 0;
-  Timer? timer;
-  int seconds = 10;
-
-  @override
-  void initState() {
-    super.initState();
-    startTimer();
-  }
+  int timerResetCount = 0;
 
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
+      timerResetCount++;
     });
   }
 
-  void startTimer() {
-    timer?.cancel();
-    seconds = 10;
-
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (seconds > 0) {
-        setState(() {
-          seconds--;
-        });
-      } else {
-
-        nextQuestion();
-      }
-    });
-  }
-
-  void nextQuestion() {
-    setState(() {
-      if (currentQuestionIndex < 6) {
-        currentQuestionIndex++;
-        startTimer();
-      } else {
-        timer?.cancel();
-      }
-    });
+  void onTimeUp() {
+    answerQuestion("No Answer");
   }
 
   @override
@@ -81,10 +57,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-              )
+              ),
             ),
             const SizedBox(height: 30),
-            ...currentQuestion.getShuffledAnswers().map((answer) {
+            const SizedBox(height: 30),
+            ...currentQuestion.answers.map((answer) {
               return AnswerButton(
                 answerText: answer,
                 onTap: () {
@@ -92,6 +69,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 },
               );
             }),
+            const SizedBox(height: 30),
+            QuestionTimer(
+              key: ValueKey(timerResetCount),
+              onTimeUp: onTimeUp,
+              time: 10,
+            )
           ],
         ),
       ),
