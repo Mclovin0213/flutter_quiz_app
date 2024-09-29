@@ -8,7 +8,7 @@ class QuestionTimer extends StatefulWidget {
     required this.time,
   });
 
-  final VoidCallback onTimeUp;
+  final Function onTimeUp;
   final int time;
 
   @override
